@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alertify – Safety App</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #0a0a0a;
+      color: #ffffff;
+      min-height: 100vh;
+      padding-bottom: 120px;
+    }
+
+    header {
+      text-align: center;
+      padding: 16px;
+    }
+
+    header h1 {
+      color: #ff3b3b;
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 13px;
+      color: #aaaaaa;
+      margin-top: 4px;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: #141414;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    }
+
+    .card h2 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    /* Status Cards */
+    .status {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .status-box {
+      text-align: center;
+      padding: 14px;
+      background: #1c1c1c;
+      border-radius: 14px;
+    }
+
+    .status-box p {
+      font-size: 12px;
+      color: #aaaaaa;
+    }
+
+    .status-box span {
+      display: block;
+      font-size: 18px;
+      margin-top: 4px;
+      font-weight: bold;
+    }
+
+    .safe {
+      color: #2dff7a;
+    }
+
+    .on {
+      color: #4da6ff;
+    }
+
+    /* Location */
+    .map {
+      height: 120px;
+      background: #1c1c1c;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #888;
+    }
+
+    /* Contacts */
+    .contact {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1c1c1c;
+      padding: 10px 12px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+    }
+
+    .contact p {
+      font-size: 14px;
+    }
+
+    .contact span {
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    .check {
+      color: #2dff7a;
+      font-size: 14px;
+    }
+
+    /* Add Contact Button */
+    .add-contact-btn {
+      width: 100%;
+      padding: 10px;
+      background: #4da6ff;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .add-contact-btn:hover {
+      background: #3a8ce5;
+    }
+
+    /* Contact Form */
+    .contact-form {
+      margin-top: 10px;
+      padding: 12px;
+      background: #1c1c1c;
+      border-radius: 12px;
+    }
+
+    .contact-form input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 8px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background: #141414;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .contact-form input::placeholder {
+      color: #888;
+    }
+
+    .contact-form button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+
+    .contact-form button[type="submit"] {
+      background: #2dff7a;
+      color: #000;
+    }
+
+    .contact-form #cancelBtn {
+      background: #888;
+      color: #fff;
+    }
+
+    /* SOS Button */
+    .sos {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: none;
+      background: #ff1e1e;
+      color: #fff;
+      font-size: 26px;
+      font-weight: bold;
+      box-shadow: 0 0 35px rgba(255,0,0,0.7);
+      cursor: pointer;
+    }
+
+    .sos:active {
+      transform: translateX(-50%) scale(0.95);
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Alertify</h1>
+    <p>Night-time Safety Companion</p>
+  </header>
+
+  <div class="container">
+
+    <!-- Status Section -->
+    <div class="status">
+      <div class="status-box">
+        <p>Alert Status</p>
+        <span class="safe">Safe</span>
+      </div>
+      <div class="status-box">
+        <p>Location Sharing</p>
+        <span class="on">ON</span>
+      </div>
+    </div>
+
+    <!-- Location Card -->
+    <div class="card">
+      <h2>Live Location</h2>
+      <div class="map">Map Preview (UI Only)</div>
+      <p style="font-size:12px;color:#888;margin-top:6px;">
+        Location will be shared during emergency
+      </p>
+    </div>
+
+    <!-- Contacts Card -->
+    <div class="card">
+      <h2>Trusted Contacts</h2>
+
+      <div class="contact">
+        <div>
+          <p>Mom</p>
+          <span>XXXXXX1234</span>
+        </div>
+        <div class="check">✔</div>
+      </div>
+
+      <div class="contact">
+        <div>
+          <p>Best Friend</p>
+          <span>XXXXXX5678</span>
+        </div>
+        <div class="check">✔</div>
+      </div>
+
+      <div class="contact">
+        <div>
+          <p>Roommate</p>
+          <span>XXXXXX9012</span>
+        </div>
+        <div class="check">✔</div>
+      </div>
+
+      <button class="add-contact-btn" id="addContactBtn">Add New Contact</button>
+
+      <div class="contact-form" id="contactForm" style="display: none;">
+        <form id="newContactForm">
+          <input type="text" id="contactName" placeholder="Contact Name" required>
+          <input type="tel" id="contactPhone" placeholder="Phone Number" required>
+          <button type="submit">Add Contact</button>
+          <button type="button" id="cancelBtn">Cancel</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SOS Button -->
+  <button class="sos">SOS</button>
+
+  <script>
+    // Load contacts from localStorage or use default
+    let contacts = JSON.parse(localStorage.getItem('alertifyContacts')) || [
+      { name: 'Mom', phone: 'XXXXXX1234' },
+      { name: 'Best Friend', phone: 'XXXXXX5678' },
+      { name: 'Roommate', phone: 'XXXXXX9012' }
+    ];
+
+    // Function to render contacts
+    function renderContacts() {
+      const contactsContainer = document.querySelector('.card .contact').parentElement;
+      // Clear existing contacts except the add button and form
+      const existingContacts = contactsContainer.querySelectorAll('.contact');
+      existingContacts.forEach(contact => contact.remove());
+
+      // Re-add contacts
+      contacts.forEach(contact => {
+        const contactDiv = document.createElement('div');
+        contactDiv.className = 'contact';
+        contactDiv.innerHTML = `
+          <div>
+            <p>${contact.name}</p>
+            <span>${contact.phone}</span>
+          </div>
+          <div class="check">✔</div>
+        `;
+        contactsContainer.insertBefore(contactDiv, document.getElementById('addContactBtn'));
+      });
+    }
+
+    // Toggle form visibility
+    document.getElementById('addContactBtn').addEventListener('click', function() {
+      const form = document.getElementById('contactForm');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Handle form submission
+    document.getElementById('newContactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('contactName').value.trim();
+      const phone = document.getElementById('contactPhone').value.trim();
+
+      if (name && phone) {
+        contacts.push({ name, phone });
+        localStorage.setItem('alertifyContacts', JSON.stringify(contacts));
+        renderContacts();
+        document.getElementById('newContactForm').reset();
+        document.getElementById('contactForm').style.display = 'none';
+      } else {
+        alert('Please fill in both name and phone number.');
+      }
+    });
+
+    // Handle cancel button
+    document.getElementById('cancelBtn').addEventListener('click', function() {
+      document.getElementById('newContactForm').reset();
+      document.getElementById('contactForm').style.display = 'none';
+    });
+
+    // Initial render
+    renderContacts();
+  </script>
+
+</body>
+</html>
